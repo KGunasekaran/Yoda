@@ -1,7 +1,10 @@
 *.class
 *.txt
 Yoda/bin/
-Nobel/bin
+Nobel/bin/
+Nobel/log/
+Nobel/result/
+Nobel/temp/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
