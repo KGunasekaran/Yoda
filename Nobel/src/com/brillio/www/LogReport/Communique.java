@@ -25,7 +25,7 @@ public class Communique {
 				String wd = GlobalProperties.items.getWorkingDirectory();
 				String logFolder = wd+"log", TempFolder = wd+"temp", ResultFolder = wd+"result";
 				String RunIDinResult = ResultFolder + "/" + RunId + "/";
-				String LogFile = logFolder + "/Log_" + RunId + ".txt";
+				String LogFile = logFolder + "/Log" + RunId + "_" + Thread.currentThread().getName() + ".txt";
 				File log = new File(logFolder);
 				File temp = new File(TempFolder);
 				File result = new File(ResultFolder);

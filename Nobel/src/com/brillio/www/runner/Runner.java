@@ -28,6 +28,21 @@ public class Runner {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// create a thread and start a parallel execution from here		
+		try{
+			Date dNow = new Date( );
+			SimpleDateFormat ft = new SimpleDateFormat("ddMMyyyyhhmmss");
+			String RunID = String.valueOf(ft.format(dNow)) + String.valueOf(System.currentTimeMillis());
+			GlobalProperties.items.setRunID(RunID);
+			run();
+		}
+		catch(Exception ex){
+			
+		}
+
+	}
+	
+	public static void run(){
 		Date dNow = new Date( );
 		SimpleDateFormat ft = new SimpleDateFormat("E dd.MM.yyyy 'at' hh:mm:ss a zzz");
 		try{
@@ -41,6 +56,7 @@ public class Runner {
 			Communique.log.LogWritter("done", "Run Initiatet by = " + GlobalProperties.items.getRunUserName());
 			Communique.log.LogWritter("done", "Operating System = " + GlobalProperties.items.getRunOS());
 			Communique.log.LogWritter("done", "Looking for the configuration file in the working directory");
+			GlobalProperties.TestEnvironment._init();
 			
 		}
 		catch(Exception ex){
@@ -48,11 +64,11 @@ public class Runner {
 		}
 	}
 	
+	
+	
 	public static void _init(){
 		try{
 			String eclipsewd = System.getProperty("user.dir");
-			Random r = new Random();
-			String RunID = String.valueOf(System.currentTimeMillis()) + "" + String.valueOf(r.nextLong());
 		    String username = System.getProperty("user.name");
 		    String osname = System.getProperty("os.name");
 		    String osversion = System.getProperty("os.version");
@@ -64,14 +80,11 @@ public class Runner {
 		    else{
 		    	oWD = eclipsewd + "/";
 		    }
-		    System.out.println("+~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~+");
-			System.out.println("|Hi Welcome to Yoda...                    |");
-			System.out.println("|                       ...In God We Trust|");
-			System.out.println("+~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~+");
+			System.out.println("Hi Welcome to Nobel...");
+			System.out.println("...In God We Trust");
 			String os = osname + "-(" + osversion + ")-(" + osarch + ")";
 			GlobalProperties.items.setRunUserName(username);
-			GlobalProperties.items.setRunID(RunID);
-		    GlobalProperties.items.setWorkingDirectory(oWD);
+			GlobalProperties.items.setWorkingDirectory(oWD);
 		    GlobalProperties.items.setRunOS(os);
 		    Communique.log._init();
 		}

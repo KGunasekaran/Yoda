@@ -1,7 +1,12 @@
 package com.brillio.www.properties;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.brillio.www.LogReport.Communique;
 
 /**
  * This is the Global Properties Class, this has static inner class which contains properties
@@ -68,9 +73,35 @@ public class GlobalProperties {
 		public static String getFromEnvironment(String Key){ return Environment.get(Key); }
 		public static void SetEnvironment(HashMap<String,String> _Environment){Environment = _Environment;}
 		public static HashMap<String,String> getAllEnvironment(){ return Environment; }
-		public static void _init(){
-			String configfile = items.getWorkingDirectory() + "config/test.config";
-			
+		/**
+		 * this function will read the config file and will add it to the enviroment global variable
+		 * @throws IOException
+		 */
+		public static void _init() throws IOException{
+			Communique.log.LogWritter("done", "Starting to procedd environment variables");
+			BufferedReader br = null;
+			String configfile = "";
+			String line = "";
+			try{
+				configfile = items.getWorkingDirectory() + "config/test.config";
+				br = new BufferedReader(new FileReader(configfile));
+				while((line = br.readLine()) != null){
+					if((!line.startsWith("*")) && (line.trim() != "")){
+						String[] nvp = line.split("=");
+						if(nvp.length > 1){
+							Environment.put(nvp[0], nvp[1]);
+							Communique.log.LogWritter("done", "Environment Variable " + nvp[0] + " has value(s) " + nvp[1]);
+						}
+					}
+				}
+			}
+			catch(Exception ex){
+				System.out.println("Exception in GlobalProperties.TestEnvironment._init; Exception message = " + ex.getMessage());
+			}
+			finally{
+				br.close();
+			}
+			Communique.log.LogWritter("done", "Completed processing the environment variables");
 		}
 	}
 }
