@@ -103,5 +103,35 @@ public class GlobalProperties {
 			}
 			Communique.log.LogWritter("done", "Completed processing the environment variables");
 		}
+		
+		public static void _init(String ConfFile) throws IOException{
+			Communique.log.LogWritter("done", "Starting to procedd environment variables");
+			BufferedReader br = null;
+			String configfile = "";
+			String line = "";
+			try{
+				if(!ConfFile.endsWith(".config")){
+					ConfFile += ".config";
+				}
+				configfile = items.getWorkingDirectory() + "config/" + ConfFile;
+				br = new BufferedReader(new FileReader(configfile));
+				while((line = br.readLine()) != null){
+					if((!line.startsWith("*")) && (line.trim() != "")){
+						String[] nvp = line.split("=");
+						if(nvp.length > 1){
+							Environment.put(nvp[0], nvp[1]);
+							Communique.log.LogWritter("done", "Environment Variable " + nvp[0] + " has value(s) " + nvp[1]);
+						}
+					}
+				}
+			}
+			catch(Exception ex){
+				System.out.println("Exception in GlobalProperties.TestEnvironment._init; Exception message = " + ex.getMessage());
+			}
+			finally{
+				br.close();
+			}
+			Communique.log.LogWritter("done", "Completed processing the environment variables");
+		}
 	}
 }

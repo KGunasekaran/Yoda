@@ -35,6 +35,7 @@ public class Runner {
 			String RunID = String.valueOf(ft.format(dNow)) + String.valueOf(System.currentTimeMillis());
 			GlobalProperties.items.setRunID(RunID);
 			run();
+			
 		}
 		catch(Exception ex){
 			
@@ -56,7 +57,13 @@ public class Runner {
 			Communique.log.LogWritter("done", "Run Initiatet by = " + GlobalProperties.items.getRunUserName());
 			Communique.log.LogWritter("done", "Operating System = " + GlobalProperties.items.getRunOS());
 			Communique.log.LogWritter("done", "Looking for the configuration file in the working directory");
-			GlobalProperties.TestEnvironment._init();
+			String conf = System.getProperty("configfile");
+			if(conf != null){
+				GlobalProperties.TestEnvironment._init(conf);
+			}
+			else{
+				GlobalProperties.TestEnvironment._init();
+			}
 			
 		}
 		catch(Exception ex){
